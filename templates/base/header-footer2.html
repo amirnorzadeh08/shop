@@ -1,0 +1,1459 @@
+{% load static %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}فروشگاه اینترنتی ما{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+    <style>
+        :root {
+            --primary: #ff9900;
+            --primary-dark: #e68a00;
+            --secondary: #232f3e;
+            --light: #f8f9fa;
+            --dark: #131921;
+            --gray: #6c757d;
+            --accent: #00a8e8;
+        }
+
+        body {
+            font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f3f6;
+            color: #0f1111;
+
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .navbar {
+            background: linear-gradient(90deg, var(--dark) 0%, #1a252f 100%);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 5px RGBA(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary) !important;
+            font-size: 1.8rem;
+            transition: transform 0.3s;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 992px) {
+            .navbar-expand-lg .navbar-nav .dropdown-menu {
+                position: absolute;
+                min-width: 500px;
+
+
+            }
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s, background 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .search-form {
+            flex-grow: 1;
+            max-width: 700px;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .search-form input {
+            border-radius: 25px 0 0 25px;
+            border: none;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 0 25px 25px 0;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .cart-icon, .user-icon {
+            color: #fff;
+            font-size: 1.5rem;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover, .user-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary);
+            color: #fff;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mega Menu */
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+
+        }
+
+        .nav-item:hover .mega-menu {
+            display: block;
+        }
+
+        .mega-menu .row {
+            margin: 0;
+        }
+
+        .mega-menu .category-card {
+            padding: 10px;
+            text-align: right;
+            position: relative;
+        }
+
+        .mega-menu .subcategories-list {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 100%;
+            background: #fff;
+            min-width: 200px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        .mega-menu .category-card:hover .subcategories-list {
+            display: block;
+        }
+
+        .mega-menu .subcategory-item {
+            display: block;
+            padding: 5px 0;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mega-menu .subcategory-item:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Slider */
+        .hero-slider {
+            height: 450px;
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            position: relative;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .swiper-slide-active .hero-slide {
+            transform: scale(1.02);
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            color: #fff;
+            max-width: 600px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .slide-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .slide-content .btn {
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+
+        /* Categories Slider */
+        .categories-slider {
+            padding: 20px 0;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .categories-slider .swiper-slide {
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .category-card-slider {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card-slider:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+        }
+
+        .category-icon-slider {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .category-card-slider:hover .category-icon-slider {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .category-name-slider {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .subcategories-slider {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            border-radius: 8px;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .category-card-slider:hover .subcategories-slider {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .subcategory-item-slider {
+            display: block;
+            padding: 8px 0;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .subcategory-item-slider:last-child {
+            border-bottom: none;
+        }
+
+        .subcategory-item-slider:hover {
+            color: var(--primary);
+            padding-right: 8px;
+        }
+
+        .subcategory-item-slider:hover i {
+            opacity: 1;
+            margin-left: 5px;
+        }
+
+        .subcategory-item-slider i {
+            opacity: 0;
+            transition: all 0.2s;
+        }
+
+        /* Products */
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            object-fit: contain;
+            padding: 15px;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            height: 45px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #b12704;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .product-rating {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .btn-add-to-cart {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-add-to-cart:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(90deg, var(--secondary) 0%, #1a252f 100%);
+            color: #fff;
+            padding: 50px 0 20px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #37475a;
+            border-radius: 50%;
+            color: #fff;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            transform: rotate(360deg);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #37475a;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                margin-top: 10px;
+            }
+
+            .hero-slider {
+                height: 300px;
+            }
+
+            .slide-content {
+                bottom: 20px;
+                right: 20px;
+                padding: 15px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .mega-menu {
+                position: static;
+                box-shadow: none;
+                background: #f8f9fa;
+                max-height: none;
+            }
+
+            .subcategories-dropdown {
+                position: static;
+                box-shadow: none;
+                background: #f8f9fa;
+            }
+
+            .categories-slider .swiper-button-next,
+            .categories-slider .swiper-button-prev {
+                display: none;
+            }
+
+            /* Adjust mega menu for mobile */
+            .mega-menu .subcategories-list {
+                position: static;
+                display: block;
+                box-shadow: none;
+                padding: 0;
+                margin-top: 10px;
+            }
+        }
+
+        .promo-section {
+            background: linear-gradient(90deg, #0d47a1 0%, #1976d2 100%);
+            color: white;
+            padding: 30px 0;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-image-container {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .promo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .promo-image.active {
+            opacity: 1;
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .promo-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .promo-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffeb3b;
+        }
+
+        .promo-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .promo-date {
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .promo-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .promo-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* دکمه‌های ناوبری */
+        .promo-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .promo-nav:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .promo-prev {
+            right: 20px;
+        }
+
+        .promo-next {
+            left: 20px;
+        }
+
+        .promo-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .promo-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .promo-indicator.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* استایل‌های ریسپانسیو */
+        @media (max-width: 992px) {
+            .promo-title {
+                font-size: 1.8rem;
+            }
+
+            .promo-subtitle {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .promo-title {
+                font-size: 1.6rem;
+            }
+
+            .promo-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .promo-content {
+                text-align: center;
+            }
+
+            .promo-description {
+                margin: 0 auto 20px;
+            }
+
+            .promo-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .promo-title {
+                font-size: 1.4rem;
+            }
+
+            .promo-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .promo-description {
+                font-size: 1rem;
+            }
+        }
+
+        /* Toast notification */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background-color: #28a745;
+            color: white;
+            border-radius: 8px;
+            padding: 15px 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mega-menu {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-item.dropdown:hover .mega-menu {
+            display: block;
+        }
+
+        /* استایل زیرمنوها */
+        .dropdown-submenu {
+            position: relative;
+            max-width: 180px;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            right: 100%;
+            left: auto;
+            margin-top: -10px;
+            margin-right: 0.1rem;
+            display: none;
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-submenu .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* استایل آیتم های منو */
+        .mega-menu .dropdown-item {
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .mega-menu .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        /* آیکون فلش */
+        .dropdown-submenu .dropdown-toggle i {
+            transition: transform 0.3s;
+        }
+
+        .dropdown-submenu:hover .dropdown-toggle i {
+            transform: rotate(-90deg);
+        }
+
+        @media (min-width: 1200px) {
+
+        }
+         .mega-menu {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .nav-item.dropdown:hover .mega-menu {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            right: 100%;
+            left: auto;
+            margin-top: -10px;
+            margin-right: 0.1rem;
+            display: none;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 10px 0;
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .dropdown-submenu .dropdown-toggle::after {
+            display: none;
+        }
+
+        .mega-menu .dropdown-item {
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            color: #333;
+            font-weight: 500;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mega-menu .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        .mega-menu .dropdown-item i {
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-submenu:hover .dropdown-item i {
+            transform: rotate(-90deg);
+        }
+
+        .mega-menu .dropdown-divider {
+            margin: 10px 0;
+            border-color: #eee;
+        }
+
+        .mega-menu .category-header {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .mega-menu .row {
+            margin: 0 -10px;
+        }
+
+        .mega-menu .col-md-3 {
+            padding: 0 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* استایل‌های ریسپانسیو برای منو */
+        @media (max-width: 992px) {
+            .mega-menu {
+                position: static;
+                box-shadow: none;
+                max-height: none;
+                display: none !important;
+            }
+
+            .dropdown-submenu .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                margin: 0;
+                border: 1px solid #eee;
+                display: none !important;
+            }
+
+            .dropdown-submenu.show .dropdown-menu {
+                display: block !important;
+            }
+
+            .mega-menu.show {
+                display: block !important;
+            }
+
+            .dropdown-toggle::after {
+                display: inline-block !important;
+            }
+        }
+
+        /* استایل‌های جدید برای اسلایدر دسته‌بندی‌ها */
+        .categories-slider {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card-slider {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            position: relative;
+            border: 1px solid #f0f0f0;
+        }
+
+        .category-card-slider:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .category-icon-slider {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 153, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            transition: all 0.3s;
+        }
+
+        .category-card-slider:hover .category-icon-slider {
+            background: rgba(255, 153, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        .category-icon-slider i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .category-name-slider {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .subcategories-slider {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .category-card-slider:hover .subcategories-slider {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .subcategory-item-slider {
+            display: block;
+            padding: 8px 0;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px dashed #eee;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .subcategory-item-slider:last-child {
+            border-bottom: none;
+        }
+
+        .subcategory-item-slider:hover {
+            color: var(--primary);
+            padding-right: 10px;
+        }
+
+        .subcategory-item-slider i {
+            opacity: 0;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+
+        .subcategory-item-slider:hover i {
+            opacity: 1;
+        }
+
+        /* استایل‌های ریسپانسیو برای اسلایدر دسته‌بندی‌ها */
+        @media (max-width: 768px) {
+            .categories-slider {
+                padding: 15px;
+            }
+
+            .category-card-slider {
+                padding: 15px 10px;
+            }
+
+            .category-icon-slider {
+                width: 50px;
+                height: 50px;
+            }
+
+            .category-icon-slider i {
+                font-size: 1.4rem;
+            }
+
+            .category-name-slider {
+                font-size: 1rem;
+            }
+
+            .subcategories-slider {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                padding: 10px 0 0 0;
+                display: none;
+            }
+
+            .category-card-slider:hover .subcategories-slider {
+                display: block;
+            }
+
+        }
+    </style>
+    {% block extra_link %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="color:black">
+        <div class="container-fluid" style="color:black">
+            <a class="navbar-brand" href="/" style="color:black">فروشگاه ما</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto position-relative">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'select_category' %}" id="categoriesDropdown"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars me-1"></i> دسته‌بندی‌ها
+                        </a>
+                        <ul class="dropdown-menu mega-menu" aria-labelledby="categoriesDropdown" dir="rtl">
+                            {% for category in main_categories %}
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        {{ category.catName }}
+                                        <i class="fas fa-angle-left float-start mt-1"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        {% for child in category.category_set.all %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'category_products' child.id %}">{{ child.catName }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">محصولات جدید</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">گران‌ترین</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ارزان‌ترین</a>
+                    </li>
+                </ul>
+                <form class="search-form d-flex">
+                    <input class="form-control me-2" type="search" placeholder="جستجوی محصولات..." id="searchInput">
+                    <button class="btn search-btn" type="submit" style="background-color: #fd9800; border-radius: 0px 30px 30px 0px">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-link position-relative mx-2">
+                        <i class="fas fa-comment user-icon"></i>
+                    </a>
+                    <a href="{% url 'view_cart' %}" class="btn btn-link position-relative mx-2">
+                        <i class="fas fa-shopping-cart cart-icon"></i>
+                        <span class="cart-count">{% if  items.count  %} {{ items.count }} {% else %} {{ cart_items|length }} {% endif %}</span>
+                    </a>
+                    <div class="dropdown">
+                        <a class="btn btn-link dropdown-toggle" href="#" role="button" id="userDropdown"
+                           data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle user-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="right: auto; left: 0;">
+                            <li><a class="dropdown-item" href="#">پروفایل من</a></li>
+                            <li><a class="dropdown-item" href="#">خریدهای من</a></li>
+                            <li><a class="dropdown-item" href="#">مدیریت محصولات</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">خروج</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="container my-4">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="footer-title">درباره فروشگاه</h5>
+                <p class="text-light">
+                    فروشگاه اینترنتی ما با بیش از 10 سال سابقه در زمینه فروش محصولات دیجیتال، بهترین گزینه برای خرید
+                    آنلاین با قیمت مناسب و گارانتی معتبر.
+                </p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="footer-title">لینک‌های مفید</h5>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="#">تماس با ما</a></li>
+                    <li><a href="#">سوالات متداول</a></li>
+                    <li><a href="#">قوانین و مقررات</a></li>
+                    <li><a href="#">حریم خصوصی</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="footer-title">دسته‌بندی‌ها</h5>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="#">الکترونیک</a></li>
+                    <li><a href="#">پوشاک</a></li>
+                    <li><a href="#">خانه و آشپزخانه</a></li>
+                    <li><a href="#">کتاب و لوازم تحریر</a></li>
+                    <li><a href="#">سلامت و زیبایی</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5 class="footer-title">اطلاعات تماس</h5>
+                <ul class="footer-links list-unstyled">
+                    <li><i class="fas fa-map-marker-alt me-2"></i> تهران، خیابان آزادی، پلاک 123</li>
+                    <li><i class="fas fa-phone me-2"></i> 021-12345678</li>
+                    <li><i class="fas fa-envelope me-2"></i> info@example.com</li>
+                    <li><i class="fas fa-clock me-2"></i> شنبه تا چهارشنبه: 8:30 - 17:30</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p class="mb-0">کلیه حقوق این وبسایت متعلق به فروشگاه اینترنتی ما می‌باشد © 1402</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // Initialize Hero Swiper
+    const heroSwiper = new Swiper('.hero-slider .swiper', {
+        direction: 'horizontal',
+        loop: true,
+        pagination: {el: '.swiper-pagination', clickable: true},
+        navigation: {nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev'},
+        autoplay: {delay: 5000, disableOnInteraction: false},
+        effect: 'fade',
+        fadeEffect: {crossFade: true}
+    });
+
+    // Initialize Categories Swiper
+    const categoriesSwiper = new Swiper('.categoriesSwiper', {
+        slidesPerView: 2,
+        spaceBetween: 10,
+        rtl: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            576: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+            },
+            768: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+            992: {
+                slidesPerView: 6,
+                spaceBetween: 25,
+            },
+        }
+    });
+
+    // Add to Cart with Loading Animation
+    document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال افزودن...';
+            this.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+
+                // Update cart count
+                const cartCount = document.querySelector('.cart-count');
+                cartCount.textContent = parseInt(cartCount.textContent) + 1;
+
+                // Show toast notification
+                const toast = document.getElementById('addToCartToast');
+                toast.style.display = 'block';
+
+                // Hide toast after 3 seconds
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            }, 1000);
+        });
+    });
+
+    // Search Autocomplete
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            const query = this.value;
+            if (query.length > 2) {
+                // Simulate search
+                console.log('Searching for:', query);
+            }
+        });
+    }
+
+    // تبلیغ اسلایدر
+    document.addEventListener('DOMContentLoaded', function () {
+        const images = document.querySelectorAll('.promo-image');
+        const indicators = document.querySelectorAll('.promo-indicator');
+        const prevBtn = document.querySelector('.promo-prev');
+        const nextBtn = document.querySelector('.promo-next');
+
+        let currentIndex = 0;
+        const totalImages = images.length;
+
+        // تابع نمایش تصویر فعلی
+        function showImage(index) {
+            // مخفی کردن همه تصاویر
+            images.forEach(img => img.classList.remove('active'));
+            // نمایش تصویر فعلی
+            images[index].classList.add('active');
+
+            // به‌روزرسانی نشانگرها
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            indicators[index].classList.add('active');
+
+            currentIndex = index;
+        }
+
+        // رفتن به تصویر بعدی
+        function nextImage() {
+            let newIndex = currentIndex + 1;
+            if (newIndex >= totalImages) newIndex = 0;
+            showImage(newIndex);
+        }
+
+        // رفتن به تصویر قبلی
+        function prevImage() {
+            let newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = totalImages - 1;
+            showImage(newIndex);
+        }
+
+        // افزودن رویداد کلیک به دکمه بعدی
+        nextBtn.addEventListener('click', nextImage);
+        // افزودن رویداد کلیک به دکمه قبلی
+        prevBtn.addEventListener('click', prevImage);
+
+        // افزودن رویداد کلیک به نشانگرها
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function () {
+                const index = parseInt(this.getAttribute('data-index'));
+                showImage(index);
+            });
+        });
+
+        // تغییر خودکار هر 5 ثانیه
+        setInterval(nextImage, 5000);
+
+        // نمایش تصویر اول
+        showImage(0);
+    });
+    const newProductsSwiper = new Swiper('.newProductsSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 15,
+        rtl: true,
+        navigation: {
+            nextEl: '.newProductsSwiper .swiper-button-next',
+            prevEl: '.newProductsSwiper .swiper-button-prev',
+        },
+        breakpoints: {
+            576: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+            },
+        }
+    });
+
+    // Initialize Special Offers Swiper
+    const specialOffersSwiper = new Swiper('.specialOffersSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 15,
+        rtl: true,
+        navigation: {
+            nextEl: '.specialOffersSwiper .swiper-button-next',
+            prevEl: '.specialOffersSwiper .swiper-button-prev',
+        },
+        breakpoints: {
+            576: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+            },
+        }
+    });
+    // فعال کردن منوهای کشویی با jQuery
+    $(document).ready(function () {
+        // هاور روی منوی اصلی
+        $('.nav-item.dropdown').hover(function () {
+            $(this).find('.mega-menu').stop(true, true).fadeIn(200);
+        }, function () {
+            $(this).find('.mega-menu').stop(true, true).fadeOut(200);
+        });
+
+        // هاور روی زیرمنوها
+        $('.dropdown-submenu').hover(function () {
+            $(this).find('.dropdown-menu').stop(true, true).fadeIn(200);
+        }, function () {
+            $(this).find('.dropdown-menu').stop(true, true).fadeOut(200);
+        });
+    });
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+{% load template_tags %}
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block ad_link %}
+    {% endblock %}
+    <link rel="shortcut icon" href="{% static 'SGN_05_22_2025_1747931827376.png' %}" type="image/x-icon">
+    <title dir="rtl">اکشن سنتر </title>
+    <style>
+        {% block add_style %}
+        {% endblock %}
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --spacing: 15px;
+            --font-main: 'r1', sans-serif;
+            --font-title: 'r6', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: rgb(226, 226, 226);
+
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+        {#max-width: 1200px;#} margin: 0 auto;
+        }
+
+        .header-up {
+            background: #fff;
+            padding: var(--spacing);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 70px;
+        }
+
+        .menu-up-header {
+            display: flex;
+            gap: 20px;
+            margin-left: 200px;
+            margin-top: 10px;
+        }
+
+        .menu-up-header a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-family: var(--font-title);
+            padding: 10px;
+            transition: color 0.3s;
+            font-size: 18px;
+        }
+
+        .menu-up-header a:hover {
+            color: var(--secondary-color);
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 800px;
+            height: 40px;
+            border-radius: 20px;
+            border: none;
+            padding: 10px 40px 10px 15px;
+            background: rgba(226, 226, 226, 0.54);
+            margin-left: -400px;
+        }
+
+        .search-button {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: -400px;
+        }
+
+        .suggestions {
+            width: 90%;
+            max-width: 800px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 5px;
+            z-index: 1000;
+            margin-top: 45px;
+        }
+
+
+        @media (max-width: 768px) {
+            .suggestions {
+                position: fixed;
+                top: 60px;
+                left: 5%;
+                width: 90%;
+            }
+
+            .search-box {
+                flex: 1;
+                max-width: 500px;
+                height: 40px;
+                border-radius: 20px;
+                border: none;
+                padding: 10px 40px 10px 15px;
+                background: rgba(226, 226, 226, 0.54);
+                margin-right: -165px;
+                margin-top: -95px;
+            }
+
+            .search-button {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-left: -85px;
+                margin-top: -40px;
+            }
+        }
+
+        .img_profile {
+            width: 60px;
+            height: 60px;
+        }
+
+        .suggestion {
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            background-color: rgba(179, 179, 179, 0.4);
+        }
+
+        .suggestion:hover {
+            background: #f0f0f0;
+        }
+
+
+        .k {
+            padding: 10px 15px;
+            color: rgba(0, 0, 0, 0.5);
+            margin-top: -10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            white-space: nowrap;
+            font-family: "Dubai Medium";
+
+        }
+
+
+        .k:hover {
+            border-bottom: 3px solid var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .item {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing);
+            padding: var(--spacing);
+            margin-right: -5px;
+        }
+
+        @media (max-width: 760px) {
+            .real-item {
+                margin-right: 10%;
+            }
+
+            .search-box {
+                width: 100px;
+                margin-left: -200px;
+                background-color: rgba(94, 89, 89, 0.36);
+
+            }
+
+            .img {
+                margin-left: -1px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .item {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .img {
+            {#width: 150px;#} height: 150px;
+                margin-top: 20px;
+            {#margin-left: 140.5%;#} border-radius: 5px;
+                margin-left: 0.5%;
+            }
+
+            .real-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-decoration: none;
+                color: var(--primary-color);
+                padding: 10px;
+                height: 100%;
+            }
+
+            .img {
+                width: 90%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                border-radius: 5px;
+                margin-top: 5px;
+            }
+
+            .text {
+                text-align: center;
+                margin-top: 5px;
+                font-size: 14px;
+                overflow-wrap: break-word;
+                margin-right: -85px;
+
+            }
+
+            .price {
+                text-align: center;
+                margin-top: 5px;
+                font-weight: bold;
+                font-size: 16px;
+                margin-right: -20%;
+            }
+
+            @media (max-width: 480px) {
+                .text {
+
+                    font-size: 80%;
+                    margin-right: 1%;
+                }
+
+                .price {
+
+                    margin-right: 100%;
+                    font-size: 80%;
+                    border: 1px solid rgba(0, 0, 0, 0.129);
+                    border-radius: 40px;
+                    width: 94%;
+                }
+            }
+
+            .footer {
+
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: var(--spacing);
+                background: #fff;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            .footer-ithem {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .text-footer {
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+            .mobile-bottom-nav {
+                display: none;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #fff;
+                justify-content: space-around;
+                padding: 10px;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: #666;
+                font-size: 12px;
+            }
+
+            @media (max-width: 768px) {
+                .header-up {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+
+                .menu-up-header, .header-up > div:first-child {
+                    display: none;
+                }
+
+                .search-box {
+                    width: 90%;
+                    margin-left: -80px;
+                    margin-right: -150px;
+                    margin-top: -80px;
+                }
+
+                .search-button {
+                    margin-top: -40px;
+                    margin-left: -80px;
+                }
+
+
+                .suggestions {
+                    position: fixed;
+                    top: 60px;
+                    left: 5%;
+                    width: 90%;
+                    max-height: 150px;
+                }
+
+                .profile-link {
+                    .img_profile {
+                        margin-left: -15px;
+                    }
+                }
+
+                .mobile-bottom-nav {
+                    display: flex;
+                }
+
+                .footer {
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: 50%;
+                }
+
+                .header-down.container {
+                    overflow-x: auto;
+                    white-space: nowrap;
+                    -webkit-overflow-scrolling: touch; /* بهبود اسکرول در iOS */
+                    background-color: white;
+                    width: 100%;
+                }
+
+                .header-down.container > a {
+                    display: inline-block;
+                    margin-right: 10px; /* فاصله بین آیتم‌ها */
+                    padding: 5px;
+                }
+
+                .header-down.container > a:last-child {
+                    margin-right: 0; /* حذف فاصله اضافی در آخرین آیتم */
+                }
+
+            }
+
+            @media (max-width: 480px) {
+                .header-down {
+                    gap: 6px;
+                }
+
+                .k {
+                    padding: 6px 10px;
+                    font-size: 11px;
+                    margin-top: 3px;
+                }
+            }
+
+
+            .profile-link {
+                order: 1;
+                margin-right: 280px;
+            }
+
+            @media (max-width: 768px) {
+                .profile-link {
+                    order: -1;
+                }
+            }
+        }
+
+
+        @media (min-width: 1270px) {
+
+            @media (max-width: 1600px) {
+                .item {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr); /* 6 ستون با عرض مساوی */
+                    gap: 15px; /* فاصله بین آیتم‌ها */
+                    margin-right: 5px;
+                }
+
+                .img_profile {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                .real-item {
+                    background-color: white;
+                    border-radius: 20px;
+                    height: 350px;
+
+                }
+
+                .real-item:hover {
+                    background-color: #2d2f2e29;
+                    margin-top: -5px;
+                    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.09);
+                }
+
+                .text {
+                    margin-right: -5%;
+                    font-size: 150%;
+                }
+
+                .price {
+                    font-size: 150%;
+                    margin-right: 3%;
+                    border: 1px solid rgba(0, 0, 0, 0.129);
+                    border-radius: 40px;
+                    width: 95%;
+
+                }
+
+            }
+
+            .img {
+                width: 90%;
+                height: 70%;
+                margin: 10px;
+                border-radius: 20px;
+
+
+            }
+
+            .header-up {
+                width: 90%;
+
+            }
+
+            .header-down {
+                width: 90%;
+            }
+
+            .container {
+                max-width: 1500px;
+            }
+
+            .suggestion {
+                width: 90%;
+            }
+
+            .menu-up-header {
+                margin-right: -25%;
+                margin-top: 7px;
+                border: 1px solid rgba(0, 0, 0, 0.129);
+                border-radius: 10px;
+            }
+
+            .search-box {
+
+                margin-right: -550px;
+                margin-top: 10px;
+            }
+
+            .search-button {
+                margin-left: -245px;
+                margin-top: 6px;
+
+            }
+
+            .profile-link {
+                width: 60px;
+                height: 60px;
+                border-radius: 40px;
+                margin-right: -109px;
+                margin-top: 10px;
+
+                p {
+                    margin-top: 25px;
+                    margin-right: 25px;
+                }
+            }
+
+            .footer {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: var(--spacing);
+                background: #fff;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                margin-top: 8%;
+            }
+
+            .footer-ithem {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .text-footer {
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+            .mobile-bottom-nav {
+                display: none;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #fff;
+                justify-content: space-around;
+                padding: 10px;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: #666;
+                font-size: 12px;
+            }
+
+            .header-down {
+                display: flex;
+                justify-content: flex-end;
+                background: #fff;
+
+                border-radius: 0 0 20px 20px;
+                width: 90%;
+                gap: 10px;
+                padding-left: 240px;
+            }
+
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-up container">
+        <div style="margin-top: 5px;"><a href="/"><img src="{% static 'SGN_05_22_2025_1747931827376.png' %}" alt="لوگو"
+                                                       height="120px"
+                                                       width="200px" style="border-radius: 50px"></a></div>
+        <nav class="menu-up-header">
+            <a href="{% url 'select_category' %}">دسته‌ها</a>
+            <a href="{% url 'auction_list' %}" style="color: brown;">مزایدات</a>
+        </nav>
+        <div style="position: relative;">
+            <form method="get" action="{% url 'smart_search' %}" style="display: flex; align-items: center;">
+                <input type="text" name="q" value="{{ request.GET.q }}"
+                       placeholder="جستجوی ..."
+                       class="search-box autocomplete"
+                       data-url="{% url 'autocomplete_search' %}"
+                       id="search-input">
+                <button type="submit" class="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="20" height="20">
+                        <path d="M13 3C7.4889971 3 3 7.4889971 3 13C3 18.511003 7.4889971 23 13 23C15.396508 23 17.597385 22.148986 19.322266 20.736328L25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969L20.736328 19.322266C22.148986 17.597385 23 15.396508 23 13C23 7.4889971 18.511003 3 13 3 z M 13 5C17.430123 5 21 8.5698774 21 13C21 17.430123 17.430123 21 13 21C8.5698774 21 5 17.430123 5 13C5 8.5698774 8.5698774 5 13 5 z"
+                              fill="#4F4C4C"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="profile-link">
+                <img src="{{ user.image_profile.url }}" alt="پروفایل"
+                     style="border-radius: 40px;" class="img_profile">
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="profile-link"> <img
+                    src="{% static '26699464-login-icon-or-button-login-login-button-login-icon-login-sign-icon-button-sign-sign-in.jpg' %}"
+                    alt="پروفایل"
+                    style="border-radius: 40px;" class="img_profile"></a>
+        {% endif %}
+    </div>
+</header>
+
+<div id="suggestions" class="suggestion container"
+     style="background-color: white; color: black; font-family: Arial"></div>
+
+<div class="header-down container" dir="rtl">
+    <div class="header-down container" dir="rtl">
+        <a href="
+
+
+
+
+
+
+
+                
+                
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='new' %}{% else %}{% url 'new_products' %}{% endif %}">
+            <div class="k" dir="ltr">کالاهای جدید</div>
+        </a>
+        <a href="
+
+
+
+
+
+
+
+                
+                
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='views_day' %}{% else %}{% url 'views_one_day' %}{% endif %}">
+            <div class="k" dir="ltr">پر بازدید در امروز</div>
+        </a>
+        <a href="
+
+
+
+
+
+
+
+                
+                
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='views_week' %}{% else %}{% url 'views_one_weeks' %}{% endif %}">
+            <div class="k" dir="ltr">پر بازدید در هفته</div>
+        </a>
+        <a href="
+
+
+
+
+
+
+
+                
+                
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='user_views' %}{% else %}{% url 'base_your_view' %}{% endif %}">
+            <div class="k" dir="ltr">  بازدید های شما</div>
+        </a>
+        <a href="
+
+
+
+
+
+
+
+
+
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='price_desc' %}{% else %}{% url 'expensive_products' %}{% endif %}">
+            <div class="k" dir="ltr">بالا‌ترین قیمت</div>
+        </a>
+        <a href="
+
+
+
+
+
+
+
+
+
+
+                {% if category %}{% url 'category_products' category.id %}?{% querystring sort='price_asc' %}{% else %}{% url 'cheep_products' %}{% endif %}">
+            <div class="k" dir="ltr">پایین‌ترین قیمت</div>
+        </a>
+
+    </div>
+</div>
+
+
+<div class="item" style="text-align: center;">
+    {% for product in result %}
+        {% if product.selltype == 'auction' %}
+            <a style="text-decoration: none; background-color: #b9dbb9" href="{% url 'product_detail' product.id %}"
+               class="real-item"><img
+                    class="img"
+                    src="{{ product.image.url }}" alt="">
+                <div dir="auto" class="text"
+                     style=" font-family: 'Arial Unicode MS'; color: #000000;  ">{{ product|truncatechars:20 }}</div>
+                <div class="price" dir="rtl" style="color: #000000; margin-top: 5px; margin-left: 135px;">
+                    {{ product.price|persian_price }}
+                </div>
+            </a>
+        {% elif product.selltype == 'normal' %}
+            <a style="text-decoration: none;" href="{% url 'product_detail' product.id %}" class="real-item"><img
+                    class="img"
+                    src="{{ product.image.url }}" alt="">
+                <div dir="auto" class="text"
+                     style=" font-family: 'Arial Unicode MS'; color: #000000;  ">{{ product|truncatechars:20 }}</div>
+                <div class="price" dir="rtl" style="color: #000000; margin-top: 5px; margin-left: 135px;">
+                    {{ product.price|persian_price }}
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+<script>
+    window.selectSuggestion = function (suggestion) {
+        const searchInput = document.querySelector('.autocomplete');
+        const suggestionsDiv = document.getElementById('suggestions');
+        searchInput.value = suggestion;
+        suggestionsDiv.style.display = 'none';
+        document.querySelector('form').submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.autocomplete');
+        const suggestionsDiv = document.getElementById('suggestions');
+        let timeoutId;
+
+        searchInput.addEventListener('input', function (e) {
+            clearTimeout(timeoutId);
+            const query = e.target.value.trim();
+            const url = e.target.dataset.url;
+
+            if (query.length > 2) {
+                timeoutId = setTimeout(async () => {
+                    try {
+                        const response = await fetch(`${url}?q=${encodeURIComponent(query)}`);
+                        if (!response.ok) throw new Error('خطا در دریافت داده');
+                        const suggestions = await response.json();
+
+                        suggestionsDiv.innerHTML = suggestions.map(suggestion => `
+                        <div class="suggestion" onclick="selectSuggestion('${suggestion.replace(/'/g, "\\'")}')">
+                            ${suggestion}
+                        </div>
+                    `).join('');
+
+                        suggestionsDiv.style.display = 'block';
+                    } catch (error) {
+                        console.error('خطا:', error);
+                        suggestionsDiv.style.display = 'none';
+                    }
+                }, 300);
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.suggestions') && !e.target.closest('.autocomplete')) {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+    });
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const nav = document.querySelector('.mobile-bottom-nav');
+
+        if (currentScroll > lastScroll) {
+            nav.style.transform = 'translateY(100%)';
+        } else {
+            nav.style.transform = 'translateY(0)';
+        }
+        lastScroll = currentScroll;
+    });
+</script>
+{% block content %}
+{% endblock %}
+<footer>
+    <div class="footer" dir="rtl">
+        <div class="footer-ithem">
+            <p class="text-footer">ضمانت بازگشت پول</p>
+            <p class="text-footer">ایجاد فروشگاه رایگان</p>
+            <p class="text-footer" style="color: blue;">راهنما و قوانین مقررات</p>
+            <p class="text-footer">تماس با ما</p>
+            <p class="text-footer">لینک ها</p>
+            <p class="text-footer">تلفن:021-12825</p>
+            <svg style="width: 20px; gap:1px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path d="M11.46875 5C7.917969 5 5 7.914063 5 11.46875L5 20.53125C5 24.082031 7.914063 27 11.46875 27L20.53125 27C24.082031 27 27 24.085938 27 20.53125L27 11.46875C27 7.917969 24.085938 5 20.53125 5 Z M 11.46875 7L20.53125 7C23.003906 7 25 8.996094 25 11.46875L25 20.53125C25 23.003906 23.003906 25 20.53125 25L11.46875 25C8.996094 25 7 23.003906 7 20.53125L7 11.46875C7 8.996094 8.996094 7 11.46875 7 Z M 21.90625 9.1875C21.402344 9.1875 21 9.589844 21 10.09375C21 10.597656 21.402344 11 21.90625 11C22.410156 11 22.8125 10.597656 22.8125 10.09375C22.8125 9.589844 22.410156 9.1875 21.90625 9.1875 Z M 16 10C12.699219 10 10 12.699219 10 16C10 19.300781 12.699219 22 16 22C19.300781 22 22 19.300781 22 16C22 12.699219 19.300781 10 16 10 Z M 16 12C18.222656 12 20 13.777344 20 16C20 18.222656 18.222656 20 16 20C13.777344 20 12 18.222656 12 16C12 13.777344 13.777344 12 16 12Z"
+                      fill="#4F4C4C"/>
+            </svg>
+            <svg style="width: 20px; gap:1px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                <path d="M5.83,23.616c12.568-5.529,28.832-12.27,31.077-13.203c5.889-2.442,7.696-1.974,6.795,3.434 c-0.647,3.887-2.514,16.756-4.002,24.766c-0.883,4.75-2.864,5.313-5.979,3.258c-1.498-0.989-9.059-5.989-10.7-7.163 c-1.498-1.07-3.564-2.357-0.973-4.892c0.922-0.903,6.966-6.674,11.675-11.166c0.617-0.59-0.158-1.559-0.87-1.086 c-6.347,4.209-15.147,10.051-16.267,10.812c-1.692,1.149-3.317,1.676-6.234,0.838c-2.204-0.633-4.357-1.388-5.195-1.676 C1.93,26.43,2.696,24.995,5.83,23.616z"
+                      fill="#4F4C4C"/>
+            </svg>
+        </div>
+        <div class="footer-ithem">
+            <img class="image-footer" src="./image/logo.png" alt=""><img class="image-footer"
+                                                                         src="./image/loogo.png"
+                                                                         alt=""><img class="image-footer"
+                                                                                     src="./image/Kasbokar.png"
+                                                                                     alt="">
+        </div>
+        <div class="footer-ithem">
+            <p class="text-footer">© شرکت تجارت لناسام سهامی خاص تحت شماره 339393</p>
+        </div>
+    </div>
+</footer>
+<div class="mobile-bottom-nav" dir="rtl">
+    <a href="/" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+        </svg>
+        <span>خانه</span>
+    </a>
+    <a href="{% url 'select_category' %}" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z"/>
+        </svg>
+        <span>دسته‌ها</span>
+    </a>
+    <a href="{% url 'auction_list' %}" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M13 16.5c0 .28.22.5.5.5h1c.28 0 .5-.22.5-.5V15h1.5c.28 0 .5-.22.5-.5v-1c0-.28-.22-.5-.5-.5H15v-1.5c0-.28-.22-.5-.5-.5h-1c-.28 0-.5.22-.5.5V13h-1.5c-.28 0-.5.22-.5.5v1c0 .28.22.5.5.5H13v1.5zM4 6v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2z"/>
+        </svg>
+        <span>مزایده</span>
+    </a>
+    <a href="{% url 'my_conversations' %}" class="nav-item">
+        <img src="{% static 'download77.jpg' %}" width="24" height="24">
+        {#            <path d="M13 16.5c0 .28.22.5.5.5h1c.28 0 .5-.22.5-.5V15h1.5c.28 0 .5-.22.5-.5v-1c0-.28-.22-.5-.5-.5H15v-1.5c0-.28-.22-.5-.5-.5h-1c-.28 0-.5.22-.5.5V13h-1.5c-.28 0-.5.22-.5.5v1c0 .28.22.5.5.5H13v1.5zM4 6v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2z"/>#}
+        {#        </img>#}
+        <span>پیام ها</span>
+    </a>
+
+</div>
+</body>
+</html>
